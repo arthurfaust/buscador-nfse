@@ -14,9 +14,10 @@ def main() -> None:
 
     cfg = Configuracao()
     print(f"Ambiente: {cfg.ambiente.value} ({cfg.url_base})")
-    estado = EstadoNSU(Path("estado") / f"nsu_{cfg.cnpj_consulta or 'certificado'}.txt")
+    pasta = Path("estado") / cfg.ambiente.value
+    estado = EstadoNSU(pasta / f"nsu_{cfg.cnpj_consulta or 'certificado'}.txt")
+    pasta_saida = cfg.pasta_saida / cfg.ambiente.value
 
     with certificado_pem(cfg.pfx_path, cfg.pfx_senha.get_secret_value()) as cert:
         cliente = ClienteADN(cfg.url_base, cert=cert)
-        sincronizar(cliente, cfg.pasta_saida, estado, cfg.cnpj_consulta,
-                    cfg.pausa_segundos, args.nsu_inicial)
+        sincronizar(cliente, pasta_saida, estado, cfg.cnpj_consulta, cfg.pausa_segundos, args.nsu_inicial)
