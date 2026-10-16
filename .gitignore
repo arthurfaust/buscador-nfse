@@ -2,6 +2,7 @@
 *.pfx
 *.p12
 *.pem
+*__pycache__/
 certificados/
 nfse_xml/
 estado/
