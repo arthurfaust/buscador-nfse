@@ -1,0 +1,7 @@
+.env
+*.pfx
+*.p12
+*.pem
+certificados/
+nfse_xml/
+estado/
